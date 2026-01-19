@@ -42,26 +42,18 @@
         }
 
         bidBtn.addEventListener('click', function() {
-            if (!auctionId) return;
+    if (!auctionId) return;
 
-            // Чтобы юзер видел, что процесс идет
-            bidBtn.innerText = "Отправка...";
-            bidBtn.disabled = true;
-
-            const data = {
-                auction_id: auctionId,
-                action: "bid"
-            };
-
-            // Отправляем данные боту
-            tg.sendData(JSON.stringify(data));
-
-            // Если ты хочешь, чтобы приложение НЕ ЗАКРЫВАЛОСЬ:
-            // ВАЖНО: tg.sendData ПО-ЛЮБОМУ закроет приложение в Telegram.
-            // Чтобы оно не закрывалось, нужно использовать AJAX-запросы к твоему серверу.
-            // Но в рамках твоего текущего ТЗ (пункт 5) и использования GitHub Pages — 
-            // закрытие после ставки — это нормальное поведение для подтверждения.
-        });
+    // Формируем ссылку для возврата в бота с параметром
+    // Это заставит пользователя перейти в бота, а бот получит команду /start bid_ID
+    const botUsername = "ВАШ_ЮЗЕРНЕЙМ_БОТА"; // Замените на юзернейм вашего бота без @
+    const returnUrl = `https://t.me/${botUsername}?start=bid_${auctionId}`;
+    
+    // Открываем ссылку
+    tg.openTelegramLink(returnUrl);
+    tg.close(); // Закрываем Mini App
+});
     </script>
 </body>
 </html>
+
